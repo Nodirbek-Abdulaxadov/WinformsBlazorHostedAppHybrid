@@ -7,3 +7,27 @@
 @using Microsoft.AspNetCore.Components.Web.Virtualization
 @using Microsoft.JSInterop
 @using Client
+@* System *@
+@using Microsoft.AspNetCore.WebUtilities;
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.Extensions.Localization;
+@using ActualLab.Fusion.Blazor;
+@using GlobalErrorHandler.Exceptions
+@using System.Text.RegularExpressions
+@using System.ComponentModel.DataAnnotations
+
+@* Project Reference *@
+@using Shared
+
+@* External *@
+@using MudBlazor
+
+@*FUSION*@
+@using ActualLab.Fusion
+@using ActualLab.Fusion.UI
+
+@using System.Linq.Expressions
+@* Global injects *@
+
+
+@inject IStringLocalizer<Shared.Localization.SharedResource> L

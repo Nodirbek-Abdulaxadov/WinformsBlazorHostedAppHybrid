@@ -10,8 +10,18 @@
 
   <ItemGroup>
       <ProjectReference Include="..\Client\Client.csproj" />
+      <ProjectReference Include="..\Services\Services.csproj" />
+      <ProjectReference Include="..\Shared\Shared.csproj" />
+      <PackageReference Include="ActualLab.Fusion.Server" Version="9.0.59" />
+      <PackageReference Include="ActualLab.Generators" Version="9.0.59">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+      <PackageReference Include="Blazored.LocalStorage" Version="4.5.0" />
+      <PackageReference Include="GlobalErrorHandler" Version="1.1.0" />
 	  <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.7" />
 	  <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2592.51" />
+	  <PackageReference Include="MudBlazor" Version="7.5.0" />
   </ItemGroup>
 
 </Project>

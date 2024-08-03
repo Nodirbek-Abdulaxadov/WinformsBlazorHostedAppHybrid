@@ -1,0 +1,59 @@
+﻿@page  "/todos"
+
+@inherits MixedStateComponent<TableResponse<TodoView>, TableOptions>
+@inject ITodoService TodoService
+@inject UInjector _injector
+@{
+    Items = State.GetValue(_injector);
+}
+
+@if(Items.Items.Any())
+{
+    <ol>
+        @foreach(var item in Items.Items)
+        {
+            <li>@item.Name</li>
+        }
+    </ol>
+}
+else
+{
+    <p> nothing </p>
+}
+
+@code {
+
+    private TableResponse<TodoView>? Items;
+
+    private string[] SortColumns = new string[] { "Id", "Name" };
+
+    protected override MutableState<TableOptions>.Options GetMutableStateOptions()
+    {
+        var uri = _injector.NavigationManager.ToAbsoluteUri(_injector.NavigationManager.Uri);
+        QueryHelpers.ParseQuery(uri.Query).TryGetValue("page", out var _initialCount);
+        QueryHelpers.ParseQuery(uri.Query).TryGetValue("search", out var searchParam);
+        int count = 1;
+        int.TryParse(_initialCount, out count);
+        return new() { InitialValue = new TableOptions() { Page = count == 0 ? 1 : count, PageSize = 15, SortLabel = "Id", SortDirection = 1, Search = searchParam } };
+    }
+
+    protected override async Task<TableResponse<TodoView>> ComputeState(CancellationToken cancellationToken = default)
+    {
+        var complices = await TodoService.GetAll(MutableState.Value);
+        return complices;
+
+    }
+
+    private async Task Delete(string Id, CancellationToken cancellationToken = default)
+    {
+        bool? result = await _injector.DialogService.ShowMessageBox(
+        @L["DeleteConfirmation"],
+        @L["UnDoneDelete"],
+        yesText: "Delete!", cancelText: @L["Cancel"]);
+        if (result ?? false)
+        {
+            //await _injector.Commander.Run(new DeleteTodoCommand(_injector.Session, Id));
+            _injector.Snackbar.Add(@L["SuccessDelete"], Severity.Success);
+        }
+    }
+}
